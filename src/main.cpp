@@ -1,23 +1,67 @@
+#include <SFML/Graphics.hpp>
 #include "QuadTree.h"
+#include "Snake.h"
+#include "Food.h"
 
 int main() {
-    QuadTree qt(8, 8);
+    int width = 800, height = 600;
+    sf::RenderWindow window(sf::VideoMode(width, height), "Snake QuadTree");
 
-    Point A = {1, 1};
-    Point B = {6, 6};
-    Point C = {1, 6};
-    Point D = {6, 1};
+    Snake snake(width/2, height/2);
+    Food food(width, height);
+    food.generate(snake.getBody());
 
-    qt.insert(A);
-    qt.insert(B);
-    qt.insert(C);
-    qt.insert(D);
+    sf::RectangleShape block(sf::Vector2f(10,10));
+    sf::Clock clock;
+    float speed = 0.1f;
 
-    std::cout << "Buscar punto (1,1): " << (qt.search(A) ? "Encontrado" : "No encontrado") << std::endl;
-    std::cout << "Buscar punto (5,5): " << (qt.search({5,5}) ? "Encontrado" : "No encontrado") << std::endl;
+    Direction dir = RIGHT;
 
-    qt.remove(A);
-    std::cout << "Buscar punto (1,1) después de eliminar: " << (qt.search(A) ? "Encontrado" : "No encontrado") << std::endl;
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) window.close();
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Up && dir != DOWN) dir = UP;
+                if (event.key.code == sf::Keyboard::Down && dir != UP) dir = DOWN;
+                if (event.key.code == sf::Keyboard::Left && dir != RIGHT) dir = LEFT;
+                if (event.key.code == sf::Keyboard::Right && dir != LEFT) dir = RIGHT;
+            }
+        }
+
+        if (clock.getElapsedTime().asSeconds() > speed) {
+            snake.move(dir);
+            clock.restart();
+
+            // Verificar colisión con comida
+            if (snake.getBody().front().x == food.getPosition().x &&
+                snake.getBody().front().y == food.getPosition().y) {
+                snake.grow();
+                food.generate(snake.getBody());
+            }
+
+            // Verificar colisión
+            if (snake.checkCollision(width, height)) {
+                window.close();
+            }
+        }
+
+        window.clear();
+
+        // Dibujar comida
+        block.setFillColor(sf::Color::Red);
+        block.setPosition(food.getPosition().x, food.getPosition().y);
+        window.draw(block);
+
+        // Dibujar serpiente
+        block.setFillColor(sf::Color::Green);
+        for (auto& p : snake.getBody()) {
+            block.setPosition(p.x, p.y);
+            window.draw(block);
+        }
+
+        window.display();
+    }
 
     return 0;
 }

@@ -1,41 +1,36 @@
 cmake_minimum_required(VERSION 3.20)
-project(Hito2-AED)
+project(SnakeQuadTree)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Incluir headers
-include_directories(src)
 
-# ===========================
-#  PROGRAMA PRINCIPAL
-# ===========================
-add_executable(main
+find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+
+
+set(SOURCES
         src/main.cpp
         src/QuadTree.cpp
+        src/Snake.cpp
 )
 
-# ===========================
-#  EJEMPLOS
-# ===========================
-add_executable(ejemplo_insertar
-        examples/ejemplo_insertar.cpp
-        src/QuadTree.cpp
+set(HEADERS
+        src/QuadTree.h
+        src/Snake.h
 )
 
-add_executable(ejemplo_buscar
-        examples/ejemplo_buscar.cpp
-        src/QuadTree.cpp
-)
 
-add_executable(ejemplo_eliminar
-        examples/ejemplo_eliminar.cpp
-        src/QuadTree.cpp
-)
+add_executable(SnakeGame ${SOURCES} ${HEADERS})
 
-# ===========================
-#  TESTS
-# ===========================
-add_executable(test_quadtree
-        tests/test_quadtree.cpp
-        src/QuadTree.cpp
-)
+
+target_link_libraries(SnakeGame sfml-graphics sfml-window sfml-system)
+
+target_include_directories(SnakeGame PRIVATE src)
+
+
+if(APPLE)
+    set_target_properties(SnakeGame PROPERTIES
+            MACOSX_BUNDLE TRUE
+            MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/Info.plist
+    )
+endif()
