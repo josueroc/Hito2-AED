@@ -65,20 +65,6 @@ g++ -std=c++17 src/*.cpp -o QuadTreeDemo
 ./QuadTreeDemo
 ```
 
-3. (Opcional) Compilar el artículo en LaTeX:
-
-```bash
-cd latex
-pdflatex main.tex
-bibtex main
-pdflatex main.tex
-pdflatex main.tex
-```
-
-Esto generará `main.pdf` con el artículo completo.
-
----
-
 ## Uso básico del Quad Tree
 
 * **Inserción:** agregar puntos 2D a la estructura.
