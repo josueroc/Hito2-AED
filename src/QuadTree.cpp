@@ -5,8 +5,24 @@ QuadTree::QuadTree(int width, int height) {
     root = new QuadNode(0, 0, width, height);
 }
 
+void liberarNodo(QuadNode* node) {
+    if (!node) return;
+
+    liberarNodo(node->NW);
+    liberarNodo(node->NE);
+    liberarNodo(node->SW);
+    liberarNodo(node->SE);
+
+    if (node->point) {
+        delete node->point;
+        node->point = nullptr;
+    }
+
+    delete node;
+}
+
 QuadTree::~QuadTree() {
-    // Aquí se debería implementar la liberación recursiva de memoria
+    liberarNodo(root);
 }
 
 bool QuadTree::insert(Point p) {
