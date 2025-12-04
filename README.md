@@ -23,7 +23,7 @@ El objetivo es proporcionar una implementación funcional y documentación técn
 📁 Estructura del repositorio
 
 <pre>
-```txt
+
 snake-quadtree/
 ├── CMakeLists.txt
 ├── README.md
@@ -49,7 +49,7 @@ snake-quadtree/
     ├── main.tex
     ├── references.bib
     └── figures/
-```
+
 </pre>
 
 
