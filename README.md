@@ -58,7 +58,7 @@ snake-quadtree/
 
 1. Crear carpeta de compilación y configurar:
 
-```bash
+
 mkdir build
 cd build
 cmake ..
