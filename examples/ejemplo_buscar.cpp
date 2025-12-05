@@ -1,19 +1,19 @@
-#include "QuadTree.h"
 #include <iostream>
+#include "QuadTree.h"
 
 int main() {
     QuadTree qt(100, 100);
 
-    Point p1 = {10, 20};
-    Point p2 = {50, 50};
-    qt.insert(p1);
-    qt.insert(p2);
+    qt.insert({10, 20});
+    qt.insert({50, 50});
+    qt.insert({75, 80});
 
-    Point buscar = {50, 50};
-    if (qt.search(buscar)) {
-        std::cout << "Punto encontrado en el QuadTree." << std::endl;
+    Point p = {50, 50};
+
+    if (qt.search(p)) {
+        std::cout << "Punto (" << p.x << "," << p.y << ") encontrado." << std::endl;
     } else {
-        std::cout << "Punto NO encontrado en el QuadTree." << std::endl;
+        std::cout << "Punto (" << p.x << "," << p.y << ") no encontrado." << std::endl;
     }
 
     return 0;

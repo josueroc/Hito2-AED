@@ -8,7 +8,7 @@
 class Food {
 public:
     Food(int width, int height);
-    void generate(const std::vector<Point>& snakeBody);
+    void generate(const QuadTree& qt);
     Point getPosition();
 
 private:

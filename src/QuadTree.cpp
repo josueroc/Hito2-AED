@@ -1,10 +1,8 @@
-
 #include "QuadTree.h"
 
-QuadTree::QuadTree(int width, int height) {
-    root = new QuadNode(0, 0, width, height);
-}
-
+// ----------------------
+//  Limpieza recursiva
+// ----------------------
 void liberarNodo(QuadNode* node) {
     if (!node) return;
 
@@ -13,17 +11,44 @@ void liberarNodo(QuadNode* node) {
     liberarNodo(node->SW);
     liberarNodo(node->SE);
 
-    if (node->point) {
-        delete node->point;
-        node->point = nullptr;
-    }
-
+    delete node->point;
     delete node;
+}
+
+// ----------------------
+//  Constructores
+// ----------------------
+
+QuadTree::QuadTree(int width, int height) {
+    root = new QuadNode(0, 0, width, height);
 }
 
 QuadTree::~QuadTree() {
     liberarNodo(root);
+    root = nullptr;
 }
+
+// ----------------------
+//   Movimiento
+// ----------------------
+
+QuadTree::QuadTree(QuadTree&& other) noexcept {
+    root = other.root;
+    other.root = nullptr;
+}
+
+QuadTree& QuadTree::operator=(QuadTree&& other) noexcept {
+    if (this != &other) {
+        liberarNodo(root);
+        root = other.root;
+        other.root = nullptr;
+    }
+    return *this;
+}
+
+// ----------------------
+//   Inserción
+// ----------------------
 
 bool QuadTree::insert(Point p) {
     return insert(root, p);
@@ -36,28 +61,40 @@ bool QuadTree::insert(QuadNode* node, Point p) {
         return true;
     }
     else if (node->type == LEAF) {
-        subdivide(node);
-        Point existing = *(node->point);
+        Point old = *(node->point);
         delete node->point;
         node->point = nullptr;
-        insert(getQuadrant(node, existing), existing);
+
+        subdivide(node);
+        insert(getQuadrant(node, old), old);
         return insert(getQuadrant(node, p), p);
     }
-    else { // INTERNAL
+    else {
         return insert(getQuadrant(node, p), p);
     }
 }
 
-bool QuadTree::search(Point p) {
+// ----------------------
+//   Búsqueda
+// ----------------------
+
+bool QuadTree::search(Point p) const {
     return search(root, p);
 }
 
-bool QuadTree::search(QuadNode* node, Point p) {
+bool QuadTree::search(QuadNode* node, Point p) const {
     if (!node) return false;
     if (node->type == EMPTY) return false;
-    if (node->type == LEAF) return (node->point->x == p.x && node->point->y == p.y);
+
+    if (node->type == LEAF)
+        return node->point->x == p.x && node->point->y == p.y;
+
     return search(getQuadrant(node, p), p);
 }
+
+// ----------------------
+//   Eliminación
+// ----------------------
 
 bool QuadTree::remove(Point p) {
     return remove(root, p);
@@ -65,31 +102,44 @@ bool QuadTree::remove(Point p) {
 
 bool QuadTree::remove(QuadNode* node, Point p) {
     if (!node) return false;
-    if (node->type == LEAF && node->point->x == p.x && node->point->y == p.y) {
+
+    if (node->type == LEAF &&
+        node->point->x == p.x &&
+        node->point->y == p.y) {
+
         delete node->point;
         node->point = nullptr;
         node->type = EMPTY;
         return true;
     }
-    else if (node->type == INTERNAL) {
+
+    if (node->type == INTERNAL)
         return remove(getQuadrant(node, p), p);
-    }
+
     return false;
 }
+
+// ----------------------
+//   Subdividir
+// ----------------------
 
 void QuadTree::subdivide(QuadNode* node) {
     int midX = (node->x_min + node->x_max) / 2;
     int midY = (node->y_min + node->y_max) / 2;
 
     node->NW = new QuadNode(node->x_min, midY, midX, node->y_max);
-    node->NE = new QuadNode(midX, midY, node->x_max, node->y_max);
+    node->NE = new QuadNode(midX,     midY, node->x_max, node->y_max);
     node->SW = new QuadNode(node->x_min, node->y_min, midX, midY);
-    node->SE = new QuadNode(midX, node->y_min, node->x_max, midY);
+    node->SE = new QuadNode(midX,     node->y_min, node->x_max, midY);
 
     node->type = INTERNAL;
 }
 
-QuadNode* QuadTree::getQuadrant(QuadNode* node, Point p) {
+// ----------------------
+//   Obtener cuadrante
+// ----------------------
+
+QuadNode* QuadTree::getQuadrant(QuadNode* node, Point p) const {
     int midX = (node->x_min + node->x_max) / 2;
     int midY = (node->y_min + node->y_max) / 2;
 
