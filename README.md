@@ -1,94 +1,142 @@
-# Hito2-AED
-Análisis y Aplicación de Quad trees en Representación Espacial y Procesamiento de Imágenes
 
-# Proyecto Quad Tree
 
-## Descripción
+🚀 Hito2-AED
 
-Este proyecto implementa un **Point Quad Tree** en C++ para la representación jerárquica de información espacial 2D.  
-Además, incluye un **artículo académico en LaTeX** que analiza los Quad Trees, sus variantes, pseudocódigo, complejidad y aplicaciones prácticas en procesamiento de imágenes, GIS, gráficos por computadora y videojuegos.
+Análisis y Aplicación de Quad Trees en Representación Espacial y Videojuegos
 
-El objetivo es proporcionar tanto una implementación funcional como documentación técnica detallada para estudiar y aplicar Quad Trees en distintos contextos.
+Este proyecto implementa un Point Quad Tree en C++ para la representación jerárquica de información espacial en 2D.
+Además, se desarrolla un juego Snake que utiliza Quad Trees para gestionar eficientemente elementos como:
+	•	la comida,
+	•	el cuerpo de la serpiente,
+	•	y las colisiones en el mapa.
 
----
+El repositorio también incluye un artículo académico en LaTeX, donde se analizan:
+	•	las variantes de Quad Trees,
+	•	su pseudocódigo,
+	•	su complejidad,
+	•	y aplicaciones en videojuegos, compresión y GIS.
 
-## Estructura del repositorio
+El objetivo es proporcionar una implementación funcional y documentación técnica que permita estudiar y aplicar Quad Trees en diversos contextos.
 
-```
+⸻
 
-QuadTreeProject/
-│
+📁 Estructura del repositorio
+
+<pre>
+
+snake-quadtree/
+├── CMakeLists.txt
 ├── README.md
-├── LICENSE
+│
 ├── src/
 │   ├── QuadTree.h
 │   ├── QuadTree.cpp
+│   ├── snake.h
+│   ├── snake.cpp
+│   ├── food.h
+│   ├── food.cpp
 │   └── main.cpp
+│
 ├── examples/
-│   └── ejemplo_insertar.cpp
+│   ├── ejemplo_insertar.cpp
+│   ├── ejemplo_buscar.cpp
+│   └── ejemplo_eliminar.cpp
+│
 ├── tests/
 │   └── test_quadtree.cpp
-├── latex/
-│   ├── main.tex
-│   ├── references.bib
-│   └── figures/
-└── .gitignore
+│
+└── latex/
+    ├── main.tex
+    ├── references.bib
+    └── figures/
 
-````
+</pre>
 
-- `src/` contiene la implementación principal del Quad Tree y un programa de demostración.  
-- `examples/` incluye ejemplos de inserción, búsqueda y eliminación de puntos.  
-- `tests/` contiene pruebas unitarias para validar el funcionamiento de la estructura.  
-- `latex/` contiene el artículo en LaTeX con figuras y referencias bibliográficas.
 
----
+Descripción
+	•	src/ → Implementación principal del Quad Tree, Snake y Food.
+	•	examples/ → Ejemplos simples de inserción, búsqueda y eliminación en el Quad Tree.
+	•	tests/ → Pruebas unitarias para validar la estructura.
+	•	latex/ → Artículo académico completo en LaTeX con bibliografía y figuras.
 
-## Requisitos
+⸻
 
-- **C++17** o superior  
-- Compilador compatible con C++ (GCC, Clang, MSVC)  
-- **LaTeX** (para compilar el artículo), recomendado **TeX Live** o **MiKTeX**
+🔧 Requisitos
 
----
+Software
+	•	C++17 o superior
+	•	Compilador compatible: GCC / Clang / MSVC
+	•	CMake 3.20+
+	•	SFML 2.5+ (para el juego Snake)
+	•	LaTeX (opcional), recomendado:
+	•	TeX Live
+	•	MiKTeX
 
-## Compilación y ejecución
+⸻
 
-1. Compilar el código principal:
+🛠️ Compilación con CMake
 
-```bash
-g++ -std=c++17 src/*.cpp -o QuadTreeDemo
-````
+1. Crear carpeta de compilación
 
-2. Ejecutar el programa:
+mkdir build
+cd build
+cmake ..
 
-```bash
-./QuadTreeDemo
-```
+2. Compilar
 
-## Uso básico del Quad Tree
+cmake --build .
 
-* **Inserción:** agregar puntos 2D a la estructura.
-* **Búsqueda:** localizar puntos existentes en el árbol.
-* **Eliminación:** remover puntos y opcionalmente comprimir nodos vacíos.
 
-Para ejemplos prácticos, revisa `examples/ejemplo_insertar.cpp`.
+⸻
 
----
+▶️ Ejecución
 
-## Referencias
+Ejecutar el juego Snake
 
-* R. A. Finkel y J. L. Bentley, "Quad trees: A data structure for retrieval on composite keys," *Acta Informatica*, 1974.
-* H. Samet, *The quadtree and related hierarchical data structures*, ACM Comput. Surv., 1984.
-* H. Samet, *Applications of Spatial Data Structures*, Addison-Wesley, 1989.
+./SnakeGame        # Linux/macOS
+SnakeGame.exe      # Windows
 
----
+Ejecutar ejemplos de Quad Tree
 
-## Licencia
+./ejemplo_insertar
+./ejemplo_buscar
+./ejemplo_eliminar
 
-Este proyecto está bajo la licencia [MIT](LICENSE). Puedes usar, modificar y distribuir libremente el código y la documentación.
+Ejecutar los tests
 
-```
+./test_quadtree
 
-Si quieres, puedo hacer una **versión aún más visual y profesional** con badges (estado de compilación, lenguaje, PDF del artículo) para que quede lista para GitHub.  
-¿Quieres que haga eso?
-```
+
+⸻
+
+🌳 Uso básico del Quad Tree
+	•	Inserción: agregar puntos 2D al árbol.
+	•	Búsqueda: localizar un punto dado.
+	•	Eliminación: remover puntos y opcionalmente fusionar subárboles vacíos.
+
+Puedes ver ejemplos prácticos en la carpeta examples/.
+
+⸻
+
+🐍 Uso básico del juego Snake
+	•	Mueve la serpiente con las flechas del teclado.
+	•	La comida se coloca mediante un Point Quad Tree para optimizar:
+	•	búsqueda espacial,
+	•	detección de colisiones,
+	•	regeneración de comida.
+	•	El juego termina si la serpiente colisiona consigo misma o con los bordes.
+
+⸻
+
+📚 Referencias
+	•	R. A. Finkel & J. L. Bentley, “Quad trees: A data structure for retrieval on composite keys”, Acta Informatica (1974).
+	•	H. Samet, “The quadtree and related hierarchical data structures”, ACM Computing Surveys (1984).
+	•	H. Samet, Applications of Spatial Data Structures, Addison-Wesley (1989).
+
+⸻
+
+📄 Licencia
+
+Este proyecto está bajo la licencia MIT.
+Puedes usar, modificar y distribuir libremente el código y la documentación.
+
