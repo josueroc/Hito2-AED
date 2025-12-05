@@ -1,218 +1,214 @@
 
-🌀 Análisis y Aplicación de Quad Trees en Representación Espacial y Procesamiento de Imágenes
 
-Este proyecto implementa un Point Quad Tree en C++ y lo aplica en dos contextos:
-	1.	Representación espacial y consultas eficientes
-	2.	Procesamiento interactivo mediante un juego tipo Snake
-donde el QuadTree se usa para manejar colisiones espaciales de manera óptima.
 
-El repositorio también incluye:
-	•	Implementación completa del Quad Tree
-	•	Ejemplos de inserción, búsqueda y eliminación
-	•	Tests unitarios
-	•	Juego Snake basado en QuadTree
-	•	Artículo en LaTeX (inclúyelo si lo tienes, puedo agregarlo como sección)
 
-⸻
+# 🌀 Análisis y Aplicación de Quad Trees en Representación Espacial y Procesamiento de Imágenes
 
-📁 Estructura del Repositorio
+Este proyecto implementa un Point Quad Tree en C++ y lo aplica en dos áreas principales:
+	•	Representación espacial de datos 2D
+	•	Procesamiento interactivo a través de un juego tipo Snake
+donde el QuadTree permite gestionar colisiones de forma eficiente.
 
+
+
+### 📁 Estructura del Repositorio
+
+
+<pre>
 Hito2-AED/
 │
-├── CMakeLists.txt             # Configuración de CMake
-├── README.md                  # Este documento
+├── CMakeLists.txt
+├── README.md
 │
-├── src/                       # Código fuente principal
-│   ├── QuadTree.cpp / .h      # Implementación del Quad Tree
-│   ├── Snake.cpp / .h         # Lógica del juego Snake
-│   ├── Food.cpp / .h          # Generación de comida usando QuadTree
-│   └── main.cpp               # Juego Snake
+├── src/
+│   ├── QuadTree.cpp
+│   ├── QuadTree.h
+│   ├── Snake.cpp
+│   ├── Snake.h
+│   ├── Food.cpp
+│   ├── Food.h
+│   └── main.cpp
 │
-├── examples/                  # Ejemplos simples de uso del Quad Tree
+├── examples/
 │   ├── ejemplo_insertar.cpp
 │   ├── ejemplo_buscar.cpp
 │   └── ejemplo_eliminar.cpp
 │
-├── tests/                     # Pruebas unitarias
+├── tests/
 │   └── test_quadtree.cpp
 │
-└── cmake-build-debug/         # Archivos generados por CMake/CLion
+└── cmake-build-debug/
+</pre>
 
 
-⸻
 
-🚀 ¿Qué implementa este proyecto?
+### 🚀 Implementaciones Principales
 
-✔️ Quad Tree para puntos (Point Quad Tree)
 
+🔷 Quad Tree (Point QuadTree)
+
+<br>
 Soporta:
-	•	insert(Point)
-	•	search(Point)
-	•	remove(Point)
-	•	subdivisión dinámica
-	•	nodos EMPTY, LEAF, INTERNAL
-
-✔️ Snake con Quad Tree
-	•	Cada frame del juego reconstruye un Quad Tree con el cuerpo de la serpiente.
-	•	La colisión con comida + cuerpo se verifica con:
-
-qt.search(point);
 
 
-	•	La comida se genera siempre en una celda no ocupada usando el Quad Tree.
+- Inserción de puntos
+- Búsqueda espacial
+- Eliminación
+- Subdivisión adaptativa
+- Nodos EMPTY, LEAF, INTERNAL  
 
-⸻
+<br>
 
-🔧 Compilación (macOS + Windows + Linux)
+🐍 Snake con QuadTree
 
-Este proyecto usa:
-	•	C++17
-	•	CMake ≥ 3.20
-	•	SFML 2.6.1
+El QuadTree se reconstruye cada frame para:
+- Detección de colisiones con el cuerpo
+- Ubicación rápida de comida
+- Optimización en consultas espaciales
 
-Para compilar:
+
+<br>
+
+Esto convierte el clásico Snake en un ejemplo práctico del uso real de Quad Trees.
+
+<br>
+
+### 🔧 Compilación del Proyecto
+
+Requisitos:
+- C++17
+- CMake ≥ 3.20
+- SFML 2.6.1 o superior
+<br>
 
 mkdir build
 cd build
 cmake ..
 cmake --build .
+<br>
 
-El ejecutable principal será:
+Ejecutar:
 
 ./SnakeGame
 
+<br>
 
-⸻
-
-📌 Cómo ejecutar los ejemplos
-
-Correr con:
+### ▶️ Ejecutar Ejemplos
 
 ./ejemplo_insertar
 ./ejemplo_buscar
 ./ejemplo_eliminar
 
-📌 Cómo ejecutar los tests
+<br>
+
+
+### 🧪 Ejecutar Tests Unitarios
 
 ./test_quadtree
 
 
-⸻
+<br>
 
-🪟 Instalación de SFML en Windows (CLion o CMake)
+### 🪟 Instalación de SFML en Windows (CLion + CMake)
 
 1️⃣ Descargar SFML 2.6.1
 
-➡ https://www.sfml-dev.org/download/sfml/2.6.1/
+🔗 https://www.sfml-dev.org/download/sfml/2.6.1/
+<br>
 
-Seleccionar según compilador:
-	•	Para MSVC 2022:
-
-SFML 2.6.1 - Visual C++ 17 (MSVC 2022) 64-bit
-
-
-	•	Para CLion + MinGW:
-
-SFML 2.6.1 - GCC 13.1.0 MinGW (SEH) 64-bit
-
-
-
-⚠ Debe coincidir exactamente:
-Arquitectura (64-bit), compilador (MSVC vs MinGW), excepción (seh/posix).
-
-⸻
+Elige la versión según tu compilador:
+- MSVC 2022 → SFML-2.6.1-windows-msvc-17-64bit
+- MinGW 64-bit → SFML-2.6.1-windows-gcc-13.1-seh-64bit
+<br>
 
 2️⃣ Extraer en:
 
 C:\libs\SFML-2.6.1
 
+<br>
 
-⸻
+3️⃣ En CLion → Settings → CMake → CMake options:
 
-3️⃣ Indicar ruta a SFML en CLion:
-
-En menú:
-
-File → Settings → Build, Execution, Deployment → CMake
-
-Agregar en CMake options:
 
 -DSFML_DIR="C:/libs/SFML-2.6.1/lib/cmake/SFML"
 
+<br>
 
-⸻
+4️⃣ Copiar las DLLs al directorio de compilación
 
-4️⃣ Copiar DLLs necesarias
-
-Copiar desde:
+Desde:
+<br>
 
 C:\libs\SFML-2.6.1\bin\
+<br>
 
 Hacia:
+<br>
 
 cmake-build-debug\
+<br>
 
-Copiar:
+Debes copiar:
+<br>
 
 sfml-graphics-2.dll
 sfml-window-2.dll
 sfml-system-2.dll
 
+<br>
 
-⸻
-
-🍏 Instalación en macOS
-
-SFML 2.6.1:
+### 🍏 Instalación SFML en macOS
 
 brew install sfml
 
-Listo → CMake lo detecta automáticamente.
+CMake lo detecta automáticamente.
+<br>
 
-⸻
 
-🕹️ Controles del juego
+### 🕹️ Controles del Juego
 
-↑  Mover arriba  
-↓  Mover abajo  
-←  Mover izquierda  
-→  Mover derecha  
+- ↑  Arriba
+- ↓  Abajo
+- ←  Izquierda
+- →  Derecha
+<br>
+Juego termina si:
+<br>
+- la serpiente golpea un borde
+- colisiona consigo misma
+<br>
 
-El juego termina si:
-	•	la serpiente choca consigo misma
-	•	se sale del mapa
 
-⸻
+### 🧰 Uso Básico del QuadTree
 
-🧪 Ejemplos de uso del QuadTree
+Insertar
 
-Insertar:
 
 QuadTree qt(100, 100);
 qt.insert({10, 20});
+<br>
 
-Buscar:
-
+Buscar
 if (qt.search({50, 50})) {
-    std::cout << "Encontrado";
+    std::cout << "Encontrado\n";
 }
+<br>
 
-Eliminar:
-
+Eliminar
 qt.remove({10, 20});
 
+<br>
 
-⸻
 
-📝 Licencia
+### 📄 Licencia
 
-MIT — Libre uso con atribución.
+Este proyecto está bajo licencia MIT.
 
-⸻
+<br>
 
-🎓 Autores
+### ✍️ Autoría
 
-Proyecto realizado para el curso Algoritmos y Estructuras de Datos
-“Hito 2 — Quad Trees”
+Proyecto desarrollado para el curso:
+Algoritmos y Estructuras de Datos — Hito 2
+“Análisis y Aplicación de Quad Trees en Representación Espacial y Procesamiento de Imágenes”
 
-⸻
